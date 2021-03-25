@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import LoginFormPage from './components/LoginFormPage';
@@ -7,10 +8,14 @@ import * as sessionActions from './store/session';
 const App = () => {
   const dispatch = useDispatch()
   const history = useHistory()
+  const [isLoaded, setIsLoaded] = useState(false);
+  useEffect(() => {
+    dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+  }, [dispatch]);
   const handClick = () => {
     dispatch(sessionActions.logoutUser())
   }
-  return (
+  return isLoaded && (
     <Switch>
       <Route exact path="/">
         <h1>Hello from App</h1>
