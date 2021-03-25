@@ -57,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
     const { id, username, email } = this;
     return { id, username, email };
   };
-  User.prototype.validatePassword = function()  {
+  User.prototype.validatePassword = function(password)  {
     return bcrypt.compareSync(password, this.hashedPassword.toString());
   };
   User.getCurrentUserById = async function(id)  {
@@ -73,6 +73,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     });
+    console.log(password)
     if( user && user.validatePassword(password) ) {
       return await User.scope('currentUser').findByPk(user.id);
     };
