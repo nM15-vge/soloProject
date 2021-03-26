@@ -4,10 +4,15 @@ import LoginForm from './LoginForm';
 
 const LoginFormModal = () => {
   const [showModal, setShowModal] = useState(false);
-
+  const onClick = e => {
+    e.preventDefault();
+    setShowModal(true);
+  }
   return(
     <>
-      <button onClick={() => setShowModal(true)}>Log In</button>
+      <a href="" onClick={onClick}>
+        <i class="fas fa-sign-in-alt" />
+        Log In</a>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <LoginForm />
