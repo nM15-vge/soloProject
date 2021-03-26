@@ -1,8 +1,0 @@
-form label{
-  display: flex;
-  flex-direction: column;
-}
-
-form input {
-  width: 300px
-}

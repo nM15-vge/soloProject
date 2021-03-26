@@ -24,8 +24,7 @@ export const logoutUser = () => async dispatch => {
   const res = await csrfFetch(`/api/session`, {
     method: 'DELETE'
   });
-  const data = await res.json();
-  console.log(data);
+  await res.json();
   dispatch(logout());
 };
 export const restoreUser = () => async dispatch => {
@@ -40,7 +39,6 @@ export const signupUser = (user) => async dispatch => {
     body: JSON.stringify({username, email, password})
   })
   const data = await res.json();
-  console.log(data);
   dispatch(login(data.user))
 }
 const sessionReducer = (state={user: null}, action) => {
