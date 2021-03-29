@@ -6,7 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     albumId: DataTypes.INTEGER
   }, {});
   CommentAlbum.associate = function(models) {
-    // associations can be defined here
+    CommentAlbum.belongsTo(models.User, {foreignKey: 'userId'});
+    CommentAlbum.belongsTo(models.Album, { foreignKey: 'albumId'});
   };
   return CommentAlbum;
 };

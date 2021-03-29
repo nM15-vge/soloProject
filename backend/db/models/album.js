@@ -18,7 +18,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   Album.associate = function(models) {
-    // associations can be defined here
+    Album.belongsTo(models.User, { foreignKey: 'userId'});
+    Album.belongsToMany(models.User, {foreignKey: 'albumId', through: 'FavoriteAlbum', otherKey: 'userId'});
+    Album.hasMany(models.Photo, {foreignKey: 'albumId'});
+    Album.hasMany(models.CommentAlbum, {foreignKey: 'albumId'});
+    Album.hasMany(models.StarPhoto, {foreignKey: 'albumId'});
   };
   return Album;
 };

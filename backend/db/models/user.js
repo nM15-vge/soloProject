@@ -108,7 +108,14 @@ module.exports = (sequelize, DataTypes) => {
     return await User.scope('currentUser').findByPk(user.id);
   }
   User.associate = function(models) {
-    // associations can be defined here
+    User.hasMany(models.Album, {foreignKey: 'userId'});
+    User.belongsToMany(models.Album, {foreignKey: 'userId', through: 'FavoriteAlbum', otherKey:'albumId'});
+    User.hasMany(models.Photo, {foreignKey: 'userId'});
+    User.belongsToMany(models.Photo, {foreignKey: 'userId', through: 'FavoritePhoto', otherKey:'photoId'});
+    User.hasMany(models.CommentAlbum, {foreignKey: 'userId'});
+    User.hasMany(models.StarAlbum, {foreignKey: 'userId'});
+    User.hasMany(models.CommentPhoto, {foreignKey: 'userId'});
+    User.hasMany(models.StarPhoto, {foreignKey: 'userId'});
   };
   return User;
 };

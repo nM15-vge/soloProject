@@ -6,7 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     photoId: DataTypes.INTEGER
   }, {});
   StarPhoto.associate = function(models) {
-    // associations can be defined here
+    StarPhoto.belongsTo(models.User, {foreignKey: 'userId'});
+    StarPhoto.belongsTo(models.Photo, {foreignKey: 'photoId'});
   };
   return StarPhoto;
 };
