@@ -4,6 +4,24 @@ const { Validator } = require("sequelize");
 const bcrypt = require('bcryptjs');
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
+    firstName: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      validate: {
+        len: [1, 30]
+      }
+    },
+    lastName: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      validate: {
+        len: [1, 30]
+      }
+    },
+    avatarUrl: {
+      type: Sequelize.STRING(255),
+      allowNull: true
+    },
     username: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -54,8 +72,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
   User.prototype.toSafeObject = function()  {
-    const { id, username, email, createdAt } = this;
-    return { id, username, email, createdAt };
+    const { id, firstName, avatarUrl, username, email, createdAt } = this;
+    return { id, firstName, avatarUrl, username, email, createdAt };
   };
   User.prototype.validatePassword = function(password)  {
     return bcrypt.compareSync(password, this.hashedPassword.toString());
@@ -77,11 +95,14 @@ module.exports = (sequelize, DataTypes) => {
       return await User.scope('currentUser').findByPk(user.id);
     };
   };
-  User.signup = async function ({ username, email, password })  {
+  User.signup = async function ({ username, email, password, firstName, lastName, avatarUrl })  {
     const hashedPassword = bcrypt.hashSync(password);
     const user = await User.create({
       username,
       email,
+      firstName,
+      lastName,
+      avatarUrl,
       hashedPassword,
     });
     return await User.scope('currentUser').findByPk(user.id);
