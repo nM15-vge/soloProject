@@ -5,7 +5,7 @@ import Navigation from './components/Navigation';
 import SignupFormPage from './components/SignupFormPage';
 import { populatePhotos } from './store/photo';
 import * as sessionActions from './store/session';
-
+import './index.css'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -20,7 +20,7 @@ const App = () => {
     <>
       <Navigation isLoaded={isLoaded} />
       <div>
-        {photos && Object.keys(photos).map(id => (<div key={id}>
+        {photos && Object.keys(photos).map(id => (<div className="picture-container" key={id}>
           <img src={photos[id].imageUrl} alt={photos[id].title} />
         </div>))}
       </div>

@@ -1,5 +1,5 @@
 'use strict';
-const imageData = require('../../imageData.json')
+const imageData = require('../../imageData2.json')
 console.log(typeof imageData)
 module.exports = {
   up: (queryInterface, Sequelize) => {
