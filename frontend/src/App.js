@@ -3,32 +3,34 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import SignupFormPage from './components/SignupFormPage';
-import { populatePhotos } from './store/photo';
 import * as sessionActions from './store/session';
-import './index.css'
+import HomePageContent from './components/HomePage';
+import ProfilePage from './components/ProfilePage';
 
 const App = () => {
   const dispatch = useDispatch()
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
-    dispatch(populatePhotos())
   }, [dispatch]);
-  const photos = useSelector(state => state.photos.recent)
-  console.log(photos);
+  const sessionUser = useSelector(state => state.session.user);
   return(
     <>
       <Navigation isLoaded={isLoaded} />
-      <div>
-        {photos && Object.keys(photos).map(id => (<div className="picture-container" key={id}>
-          <img src={photos[id].imageUrl} alt={photos[id].title} />
-        </div>))}
-      </div>
       {isLoaded && (
         <Switch>
+          <Route exact path="/">
+            <HomePageContent />
+          </Route>
           <Route path="/signup">
             <SignupFormPage />
           </Route>
+          <Route path ='/myProfile'>
+            <>
+              {sessionUser ? <ProfilePage user={sessionUser}/>: <h1>Page Not Found</h1>}
+            </>
+          </Route>
+          <Route><h1>Page Not Found</h1></Route>
         </Switch>
       )}
     </>

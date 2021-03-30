@@ -1,13 +1,13 @@
-div div {
+.navBar div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.nav-bar a {
+.navBar a {
   text-decoration: none;
 }
-.right-nav {
+.rightNav {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

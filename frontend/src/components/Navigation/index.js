@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
-import './NavBar.css'
+import styles from './NavBar.module.css'
 const Navigation = ({isLoaded}) => {
   const sessionUser = useSelector(state => state.session.user);
   let sessionLinks;
@@ -12,7 +12,7 @@ const Navigation = ({isLoaded}) => {
     );
   }else {
     sessionLinks = (
-     <div className="right-nav">
+     <div className={styles.rightNav}>
       <div>
         <LoginFormModal />
       </div>
@@ -26,8 +26,8 @@ const Navigation = ({isLoaded}) => {
     );
   };
   return(
-    <div className="nav-bar">
-      <div className="left-nav">
+    <div className={styles.navBar}>
+      <div className={styles.lefftBar}>
         <NavLink exact to="/">
           <i className="fas fa-home"/>
           Home</NavLink>

@@ -1,0 +1,39 @@
+.container {
+  width: 100%;
+  height: 200px;
+  position: relative;
+}
+.banner {
+  width: 100%;
+  height: 200px;
+  opacity: 0.90;
+  object-fit: cover;
+  object-position: top;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+#name {
+  font-size: 30px;
+  font-weight: 700px;
+  position: absolute;
+  bottom: -5px;
+  left: 140px;
+  color: white;
+}
+
+#joined {
+  font-size: 20px;
+  font-weight: 700px;
+  position: absolute;
+  bottom: -5px;
+  right: 30px;
+  color: white;
+}

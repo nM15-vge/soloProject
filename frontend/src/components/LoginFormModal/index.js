@@ -10,7 +10,7 @@ const LoginFormModal = () => {
   }
   return(
     <>
-      <a href="" onClick={onClick}>
+      <a href="/" onClick={onClick}>
         <i className="fas fa-sign-in-alt" />
         Log In</a>
       {showModal && (
