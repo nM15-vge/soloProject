@@ -5,21 +5,21 @@ const bcrypt = require('bcryptjs');
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     firstName: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING(30),
       allowNull: false,
       validate: {
         len: [1, 30]
       }
     },
     lastName: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING(30),
       allowNull: false,
       validate: {
         len: [1, 30]
       }
     },
     avatarUrl: {
-      type: Sequelize.STRING(255),
+      type: DataTypes.STRING(255),
       allowNull: true
     },
     username: {

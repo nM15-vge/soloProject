@@ -11,7 +11,7 @@ const LoginFormModal = () => {
   return(
     <>
       <a href="" onClick={onClick}>
-        <i class="fas fa-sign-in-alt" />
+        <i className="fas fa-sign-in-alt" />
         Log In</a>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
