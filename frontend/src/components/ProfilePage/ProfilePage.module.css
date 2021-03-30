@@ -37,3 +37,15 @@
   right: 30px;
   color: white;
 }
+.picture {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}

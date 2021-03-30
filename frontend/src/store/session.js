@@ -2,7 +2,7 @@ import { csrfFetch } from './csrf';
 
 const LOGIN = 'session/LOGIN';
 const LOGOUT = 'session/LOGOUT';
-
+const PHOTOS = 'session/user/PHOTOS'
 const login = (user) => ({
   type: LOGIN,
   user,
@@ -11,6 +11,10 @@ const login = (user) => ({
 const logout = () => ({
   type: LOGOUT,
 });
+const photos = (photos) => ({
+  type: PHOTOS,
+  photos
+})
 export const loginUser = (user) =>  async dispatch =>{
   const { credential, password } = user
   const res = await csrfFetch(`/api/session`, {
@@ -41,13 +45,24 @@ export const signupUser = (user) => async dispatch => {
   const data = await res.json();
   dispatch(login(data.user))
 }
-const sessionReducer = (state={user: null}, action) => {
+export const userPhotos = () => async dispatch => {
+  const res = await csrfFetch(`/api/photos/private`)
+  const data = await res.json();
+  dispatch(photos(data))
+}
+const sessionReducer = (state={user: null, userPhotos: null}, action) => {
   switch(action.type) {
     case LOGIN:
       return {user: {...action.user}}
     case LOGOUT:
       return{
         user: null
+      }
+    case PHOTOS:
+      const populatePhotosState = {};
+      action.photos.forEach(photo => populatePhotosState[photo.id] = photo)
+      return{
+        ...state, user: {...state.user}, userPhotos: {...populatePhotosState}
       }
     default:
       return state

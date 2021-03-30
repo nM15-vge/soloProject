@@ -8,7 +8,7 @@ const populate = (photos) => ({
 });
 
 export const populatePhotos = () => async dispatch => {
-  const res = await csrfFetch(`/api/photos`)
+  const res = await csrfFetch(`/api/photos/public`)
   const data = await res.json();
   dispatch(populate(data))
 };

@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { Switch, Route, NavLink } from 'react-router-dom';
+import ProfileNavigation from './ProfileNavigation';
 import styles from './ProfilePage.module.css';
+import UserPhotos from './UserPhotos';
 
 const ProfilePage = ({user}) => {
   return(
@@ -12,6 +15,12 @@ const ProfilePage = ({user}) => {
           <p id={styles.name}>{user.firstName} {user.lastName}</p>
           <p id={styles.joined}>Joined {user.createdAt.slice(0, 4)}</p>
         </div>
+        <ProfileNavigation />
+        <Switch>
+          <Route path="/myProfile/photos">
+             <UserPhotos user={user} />
+          </Route>
+        </Switch>
       </div>)}
     </>
   )
