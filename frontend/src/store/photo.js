@@ -21,7 +21,7 @@ const photoReducer = (state={recent: null}, action) => {
       return {...state, recent: {...populateState}}
     default:
       return state;
-  }
+  };
 };
 
 export default photoReducer;

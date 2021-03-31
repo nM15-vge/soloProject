@@ -1,0 +1,35 @@
+.albumForm {
+  width: 400px;
+  height: 400px;
+}
+.addAlbum {
+  font-size: 100px;
+}
+a, a:link, a:visited, a:focus, a:hover, a:active{
+  color: rgb(76, 91, 175);
+}
+.container {
+  display: flex;
+  width: 400px;
+  overflow: scroll;
+  overflow-y: hidden;
+}
+.picture {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+.pictureContainer {
+  position: relative;
+}
+.hidden {
+  display: none;
+}
+.selected {
+  color: white;
+  font-size: 45px;
+  position: absolute;
+  bottom: 50px;
+  left: 50px;
+
+}
