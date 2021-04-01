@@ -2,7 +2,7 @@ const router = require('express').Router();
 const asyncHandler = require('express-async-handler');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User, Album, Photo, StarAlbum, StarPhoto, CommentPhoto, CommentAlbum } = require('../../db/models');
-const { validateSignup } = require('../../utils/check');
+const { validateSignup, validateComment } = require('../../utils/check');
 
 router.post('', validateSignup, asyncHandler(async(req, res) => {
   const { email, password, username } = req.body;
@@ -35,9 +35,8 @@ router.post('/:id/photos/:id/stars', requireAuth, asyncHandler(async(req, res) =
   res.json({'success': 'hello'});
 }));
 
-router.post('/:id/photos/:id/comments', requireAuth, asyncHandler(async(req, res) => {
-  const { userId, photoId } = req.params;
-  const { comment } = req.body;
+router.post('/:id/photos/:id/comments', requireAuth, validateComment, asyncHandler(async(req, res) => {
+  const { comment, userId, photoId } = req.body;
   const newComment = await CommentPhoto.create({comment, photoId, userId});
   res.json({'success': 'hello'})
 }));

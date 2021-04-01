@@ -8,6 +8,7 @@ const ModalContext = createContext();
 export const ModalProvider = ({children}) => {
   const modalRef = useRef();
   const [value, setValue] = useState();
+  console.log(value)
 
   useEffect(() => {
     setValue(modalRef.current);

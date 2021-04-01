@@ -30,7 +30,15 @@ const validateSignup = [
     .withMessage('Password must be 6 characters or more.'),
   handleValidationErrors,
 ]
+
+const validateComment =[
+  check('comment')
+    .exists({checkFalsy: true})
+    .withMessage('Comment shouldn\'t be empty.'),
+    handleValidationErrors
+]
 module.exports = {
   validateLogin,
   validateSignup,
+  validateComment,
 }

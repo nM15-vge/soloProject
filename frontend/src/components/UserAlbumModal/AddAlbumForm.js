@@ -6,8 +6,8 @@ import styles from './UserAlbumModal.module.css';
 const AddAlbumForm = ({setShowModal}) => {
   const dispatch = useDispatch();
 
-  const [title, setTitle] = useState();
-  const [description, setDescription] = useState();
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [photos, setPhotos] = useState([]);
   const [errors, setErrors] = useState([]);
 

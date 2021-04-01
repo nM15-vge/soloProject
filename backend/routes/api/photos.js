@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const asyncHandler = require('express-async-handler');
 const { requireAuth } = require('../../utils/auth');
-const { Photo, CommentPhoto, StarPhoto } = require('../../db/models/index');
+const { Photo, CommentPhoto, StarPhoto, User } = require('../../db/models/index');
+
 
 router.get('/public', asyncHandler(async( req, res) => {
   const photos = await Photo.findAll({where: {public: true}, limit: 12, order:[['createdAt', 'DESC']]});
@@ -26,10 +27,12 @@ router.patch('/:id', requireAuth, asyncHandler(async(req, res) => {
 }));
 
 router.get('/:id/comments', asyncHandler(async(req, res) => {
-  const { photoId } = req.params;
-  const comments = await CommentPhoto.findAll({where: {photoId}});
+  const { id } = req.params;
+  const comments = await CommentPhoto.findAll({
+    where: {photoId: id}, include: {model: User}})
   res.json(comments);
-}));
+}));+
+
 
 
 router.delete('/:id/comments/:id', asyncHandler(async(req, res) => {
