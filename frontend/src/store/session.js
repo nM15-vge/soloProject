@@ -51,16 +51,16 @@ export const signupUser = (user) => async dispatch => {
   const data = await res.json();
   dispatch(login(data.user))
 };
-export const userPhotos = () => async dispatch => {
-  const res = await csrfFetch(`/api/photos/private`)
+export const userPhotos = (userId) => async dispatch => {
+  const res = await csrfFetch(`/api/users/${userId}/photos`)
   const data = await res.json();
   dispatch(photos(data))
 };
-export const userAlbums = () => async dispatch => {
-  const res = await csrfFetch(`/api/albums/private`);
+export const userAlbums = (userId) => async dispatch => {
+  const res = await csrfFetch(`/api/users/${userId}/albums`);
   const data = await res.json();
   dispatch(albums(data))
-}
+};
 export const userNewAlbum = (album) => async dispatch => {
   const { title, description, photos } = album
   const res = await csrfFetch(`/api/albums`, {

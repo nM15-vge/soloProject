@@ -4,9 +4,10 @@ import { userAlbums } from '../../store/session';
 import styles from './ProfilePage.module.css';
 const UserAlbums = () => {
   const dispatch = useDispatch();
+  const userId = useSelector(state => state.session.user.id)
   useEffect(() => {
-    dispatch(userAlbums())
-  }, [dispatch]);
+    dispatch(userAlbums(userId))
+  }, [dispatch, userId]);
   const albums = useSelector(state => state.session.userAlbums);
   let albumIds;
   if(albums) albumIds = Object.keys(albums)

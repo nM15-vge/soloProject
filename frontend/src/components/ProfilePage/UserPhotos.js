@@ -5,9 +5,10 @@ import { userPhotos } from '../../store/session';
 import styles from './ProfilePage.module.css';
 const UserPhotos = () => {
   const dispatch = useDispatch();
+  const userId = useSelector(state => state.session.user.id)
   useEffect(() => {
-    dispatch(userPhotos())
-  }, [dispatch])
+    dispatch(userPhotos(userId))
+  }, [dispatch, userId])
   const photos = useSelector(state => state.session.userPhotos);
   let photoIds;
   if(photos) photoIds = Object.keys(photos)

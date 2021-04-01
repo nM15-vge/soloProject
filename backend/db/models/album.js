@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   Album.associate = function(models) {
     Album.belongsTo(models.User, { foreignKey: 'userId'});
     Album.belongsToMany(models.User, {foreignKey: 'albumId', through: 'FavoriteAlbum', otherKey: 'userId'});
-    Album.hasMany(models.Photo, {foreignKey: 'albumId'});
+    Album.belongsToMany(models.Photo, {foreignKey: 'albumId', through: 'PhotoAlbum', otherKey: 'photoId'});
     Album.hasMany(models.CommentAlbum, {foreignKey: 'albumId'});
     Album.hasMany(models.StarPhoto, {foreignKey: 'albumId'});
   };

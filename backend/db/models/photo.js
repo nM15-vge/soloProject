@@ -17,16 +17,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    albumId:{
-      type: DataTypes.INTEGER,
-    },
     public:{
       type: DataTypes.BOOLEAN,
       allowNull: false
     }
   }, {});
   Photo.associate = function(models) {
-    Photo.belongsTo(models.Album, {foreignKey: 'albumId'});
+    Photo.belongsToMany(models.Album, {foreignKey: 'photoId', through: 'PhotoAlbum', otherKey: 'albumId'});
     Photo.belongsTo(models.User, {foreignKey: 'userId'});
     Photo.hasMany(models.CommentPhoto, {foreignKey: 'photoId'});
     Photo.hasMany(models.StarPhoto, {foreignKey: 'photoId'});

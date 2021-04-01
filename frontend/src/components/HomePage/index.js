@@ -20,9 +20,9 @@ const HomePageContent = () => {
           </Link>
           <div>
             <Link to={`/images/${id}`}><p>{photos[id].title}</p></Link>
-            <a><i className="far fa-comments"></i></a>
-            <a><i className="fas fa-star"></i></a>
-            {user && <a><i className="fas fa-plus"></i></a>}
+            <a href="/comments"><i className="far fa-comments"></i></a>
+            <a href="/stars"><i className="fas fa-star"></i></a>
+            {user && <a href="/favorite"><i className="fas fa-plus"></i></a>}
           </div>
         </div>))}
       </div>
