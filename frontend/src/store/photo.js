@@ -11,7 +11,7 @@ const populate = (photos) => ({
 const comments = (comments) => ({
   type: COMMENTS,
   comments
-})
+});
 
 export const populatePhotos = () => async dispatch => {
   const res = await csrfFetch(`/api/photos/public`)
@@ -33,8 +33,25 @@ export const getComments = (photoId) => async dispatch => {
   const res = await csrfFetch(`/api/photos/${photoId}/comments`);
   const data = await res.json();
   dispatch(comments(data));
+};
+export const addStar = (starObj) => async dispatch => {
+  const {photoId, userId} = starObj;
+  const res = await csrfFetch(`/api/users/${userId}/photos/${photoId}/stars`, {
+    method: 'POST',
+    body: JSON.stringify({photoId, userId})
+  });
+  const data = await res.json();
+  console.log(data);
+};
+export const removeStar = (starObj) => async dispatch => {
+  const {photoId, userId} = starObj;
+  const res = await csrfFetch(`/api/photos/${photoId}/stars`, {
+    method: 'DELETE',
+    body: JSON.stringify({photoId, userId})
+  });
+  const data = await res.json();
+  console.log(data);
 }
-
 const photoReducer = (state={recent: null, comments: null}, action) => {
   switch (action.type) {
     case POPULATE:

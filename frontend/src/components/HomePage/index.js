@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { populatePhotos } from '../../store/photo';
 import styles from './HomePageContent.module.css'
 import CommentModal from '../CommentModal';
+import StarPhoto from '../StarPhoto';
 
 const HomePageContent = () => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const HomePageContent = () => {
           <div>
             <Link to={`/photos/${id}`}><p>{photos[id].title}</p></Link>
             <CommentModal photoId={id}/>
-            <a href="/stars"><i className="fas fa-star"></i></a>
+            <StarPhoto photoId={id} userId={user.id}/>
             {user && <a href="/favorite"><i className="fas fa-plus"></i></a>}
           </div>
         </div>))}
