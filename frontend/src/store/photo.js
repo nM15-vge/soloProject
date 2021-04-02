@@ -2,6 +2,7 @@ import { csrfFetch }  from './csrf';
 
 const POPULATE = 'photos/POPULATE';
 const COMMENTS = 'photos/COMMENTS';
+const STARS ='photos/STARS'
 
 const populate = (photos) => ({
   type: POPULATE,
@@ -11,6 +12,11 @@ const populate = (photos) => ({
 const comments = (comments) => ({
   type: COMMENTS,
   comments
+});
+
+const stars = (stars) => ({
+  type: STARS,
+  stars
 });
 
 export const populatePhotos = () => async dispatch => {
@@ -52,7 +58,12 @@ export const removeStar = (starObj) => async dispatch => {
   const data = await res.json();
   console.log(data);
 }
-const photoReducer = (state={recent: null, comments: null}, action) => {
+export const getStars = (photoId) => async dispatch => {
+  const res = await csrfFetch(`/api/photos/${photoId}/stars`);
+  const data = await res.json();
+  dispatch(stars(data));
+}
+const photoReducer = (state={recent: null, comments: null, stars: null}, action) => {
   switch (action.type) {
     case POPULATE:
       const populateState = {};
@@ -62,6 +73,8 @@ const photoReducer = (state={recent: null, comments: null}, action) => {
       const populateComment = {}
       action.comments.forEach(comment => populateComment[comment.id] = comment)
       return {...state, recent: {...state.recent}, comments: {...state.comments, ...populateComment}}
+    case STARS:
+      return {...state, recent: {...state.recent}, comments: {...state.comments}, stars: {...state.stars, ...action.stars}}
     default:
       return state;
   };

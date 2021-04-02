@@ -6,6 +6,7 @@ import SignupFormPage from './components/SignupFormPage';
 import * as sessionActions from './store/session';
 import HomePageContent from './components/HomePage';
 import ProfilePage from './components/ProfilePage';
+import ImagesUpload from './components/ImagesUpload';
 
 const App = () => {
   const dispatch = useDispatch()
@@ -28,6 +29,11 @@ const App = () => {
           <Route path ='/myProfile'>
             <>
               {sessionUser ? <ProfilePage user={sessionUser}/>: <h1>Page Not Found</h1>}
+            </>
+          </Route>
+          <Route path="/photos/upload">
+            <>
+              {sessionUser ? <ImagesUpload user={sessionUser} /> : <h1>Page Not Found</h1>}
             </>
           </Route>
           <Route><h1>Page Not Found</h1></Route>

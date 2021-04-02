@@ -24,16 +24,17 @@ const CommentModal = ({photoId}) => {
   };
   const handleClick = e => {
     e.preventDefault();
-    setShowModal(true)
-
+    setShowModal(true);
   };
+  
   const user = useSelector(state => state.session.user)
   const handleSubmit = e => {
     e.preventDefault();
     return dispatch(commentPhotos({photoId, comment, userId: user.id}))
       .then(() => {
         setComment('')
-        setShowModal(false)})
+        dispatch(getComments(photoId))
+      })
       .catch(async (res) => {
         const data = await res.json();
         if(data && data.errors){

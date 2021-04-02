@@ -8,7 +8,10 @@ const Navigation = ({isLoaded}) => {
   let sessionLinks;
   if(sessionUser) {
     sessionLinks = (
-      <ProfileButton user={sessionUser} />
+      <div>
+        <ProfileButton user={sessionUser} />
+        <NavLink to='/photos/upload'><i className="fas fa-cloud-upload-alt" /></NavLink>
+      </div>
     );
   }else {
     sessionLinks = (

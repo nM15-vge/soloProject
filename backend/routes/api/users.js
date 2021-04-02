@@ -30,10 +30,11 @@ router.post('/:id/albums/:id/stars', requireAuth, asyncHandler(async(req, res) =
 }));
 
 router.post('/:id/photos/:id/stars', requireAuth, asyncHandler(async(req, res) => {
-  const { userId, photoId } = req.params;
+  const { userId, photoId } = req.body;
   await StarPhoto.create({star: 1, userId, photoId});
   res.json({'success': 'hello'});
 }));
+
 
 router.post('/:id/photos/:id/comments', requireAuth, validateComment, asyncHandler(async(req, res) => {
   const { comment, userId, photoId } = req.body;

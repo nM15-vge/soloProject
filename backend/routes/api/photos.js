@@ -36,24 +36,25 @@ router.get('/:id/comments', asyncHandler(async(req, res) => {
 
 
 router.delete('/:id/comments/:id', asyncHandler(async(req, res) => {
-  const { commentId } = req.params;
-  await CommentPhoto.destroy({where: {commentId}});
+  const { id } = req.params;
+  await CommentPhoto.destroy({where: {commentId: id}});
   res.json({'success': 'hello'});
 }));
 
 router.get('/:id/stars',  asyncHandler(async(req, res) => {
-  const { photoId } = req.params;
-  const stars = await StarPhoto.findAll({where: {photoId}});
-  let count;
-  stars.forEach(star => count += star.star);
-  res.json({stars: count});
+  const { id } = req.params;
+  const stars = await StarPhoto.findAll({where: {photoId: id}});
+  let count = 0;
+  stars.forEach(star => {
+    count += star.star});
+  res.json({[id]: count});
 }));
 
 
-router.delete('/:id/stars/:id', requireAuth, asyncHandler(async(req, res) => {
-  const { starId } = req.params;
-  await StarPhoto.destroy({where: { starId }});
-  res.json({'success': 'hello'});
+router.delete('/:id/stars/', requireAuth, asyncHandler(async(req, res) => {
+  const { photoId, userId } = req.body;
+  await StarPhoto.destroy({where: { photoId, userId }});
+  res.json({'success': 'deleted'});
 }));
 
 module.exports = router;

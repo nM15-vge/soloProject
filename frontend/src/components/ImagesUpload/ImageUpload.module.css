@@ -1,0 +1,12 @@
+.dropzone {
+  width: 100%;
+  height: 600px;
+  background-color: darkgray;
+}
+.dropzone p {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  bottom: 300px;
+  left: 500px;
+}
