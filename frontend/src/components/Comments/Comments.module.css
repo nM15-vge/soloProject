@@ -6,6 +6,9 @@
   height: 450px;
   border-radius: 10px;
   background-color: white;
+  position: absolute;
+  left: 200px;
+  top: 100px;
 }
 .commentContainer * {
   background-color: white;

@@ -1,0 +1,13 @@
+.photoComponent * {
+  aspect-ratio: 16/9;
+  width: 50%;
+  object-fit: fill;
+  position: absolute;
+  top: 50px;
+  left: 700px;
+}
+.container {
+  display: flex;
+  flex: row;
+  position: relative;
+}

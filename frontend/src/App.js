@@ -7,6 +7,7 @@ import * as sessionActions from './store/session';
 import HomePageContent from './components/HomePage';
 import ProfilePage from './components/ProfilePage';
 import ImagesUpload from './components/ImagesUpload';
+import ImagePage from './components/ImagePage';
 
 const App = () => {
   const dispatch = useDispatch()
@@ -35,6 +36,9 @@ const App = () => {
             <>
               {sessionUser ? <ImagesUpload user={sessionUser} /> : <h1>Page Not Found</h1>}
             </>
+          </Route>
+          <Route path="/photos/:id">
+            <ImagePage />
           </Route>
           <Route><h1>Page Not Found</h1></Route>
         </Switch>

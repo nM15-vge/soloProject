@@ -5,10 +5,14 @@ const { Photo, CommentPhoto, StarPhoto, User } = require('../../db/models/index'
 
 
 router.get('/public', asyncHandler(async( req, res) => {
-  const photos = await Photo.findAll({where: {public: true}, limit: 12, order:[['createdAt', 'DESC']]});
+  const photos = await Photo.findAll({where: {public: true}, limit: 12, order:[['createdAt', 'ASC']]});
   res.json(photos);
 }));
-
+router.get('/:id', asyncHandler(async(req, res) => {
+  const { id } = req.params
+  const photo = await Photo.findByPk(id, {include: {model: CommentPhoto}});
+  res.json(photo);
+}))
 router.post('/', requireAuth, asyncHandler(async(req, res) => {
   const { imageUrl, title, description, userId, public } = req.body;
   const photo = await Photo.create({imageUrl, title, description, userId, public});
@@ -33,11 +37,16 @@ router.get('/:id/comments', asyncHandler(async(req, res) => {
   res.json(comments);
 }));+
 
+router.patch('/:id/comments/:id', asyncHandler(async(req, res) => {
+  const {comment, commentId} = req.body;
+  const updatedComment = await CommentPhoto.update({comment}, {where: {id: commentId}});
+  res.json((updatedComment));
+}))
 
 
 router.delete('/:id/comments/:id', asyncHandler(async(req, res) => {
   const { id } = req.params;
-  await CommentPhoto.destroy({where: {commentId: id}});
+  await CommentPhoto.destroy({where: {id}});
   res.json({'success': 'hello'});
 }));
 

@@ -1,8 +1,31 @@
+.starContainer * {
+  background-color: transparent;
+}
 .starOn {
   color: yellow;
-  font-size: 20px;
+  font-size: 25px;
+  position: absolute;
+  bottom: 40px;
+  right: 150px;
+
 }
+
 .starOff {
   color: lightgray;
-  font-size: 20px;
+  font-size: 25px;
+  position: absolute;
+  bottom: 40px;
+  right: 150px;
+
+}
+.hide {
+  display: none;
+}
+.starText {
+  position: absolute;
+  bottom: 40px;
+  right: 120px;
+  font-size: 25px;
+  color: white;
+
 }

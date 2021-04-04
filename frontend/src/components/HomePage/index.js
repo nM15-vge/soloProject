@@ -1,10 +1,8 @@
-import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { populatePhotos } from '../../store/photo';
 import styles from './HomePageContent.module.css'
-import CommentModal from '../CommentModal';
-import StarPhoto from '../StarPhoto';
+import PictureContainerInfo from './PictureContainerInfo';
 
 const HomePageContent = () => {
   const dispatch = useDispatch();
@@ -15,19 +13,14 @@ const HomePageContent = () => {
   const photos = useSelector(state => state.photos.recent);
   const user = useSelector(state => state.session.user)
   return (
-    <div className={styles.container}>
-        {photos && Object.keys(photos).map(id => (<div className={styles.pictureContainer} key={id}>
-          <Link to={`/photos/${id}`}>
-            <img className={styles.picture} src={photos[id].imageUrl} alt={photos[id].title} />
-          </Link>
-          <div>
-            <Link to={`/photos/${id}`}><p>{photos[id].title}</p></Link>
-            <CommentModal photoId={id}/>
-            <StarPhoto photoId={id} userId={user.id}/>
-            {user && <a href="/favorite"><i className="fas fa-plus"></i></a>}
-          </div>
-        </div>))}
-      </div>
+    <>
+      <h3>Popular Photos</h3>
+      <div className={styles.container}>
+          {photos && Object.keys(photos).map(id => (
+            <PictureContainerInfo id={id} photos={id} user={user} />
+          ))}
+        </div>
+    </>
   );
 };
 export default HomePageContent;

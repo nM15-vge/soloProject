@@ -8,18 +8,22 @@ const Navigation = ({isLoaded}) => {
   let sessionLinks;
   if(sessionUser) {
     sessionLinks = (
-      <div>
-        <ProfileButton user={sessionUser} />
-        <NavLink to='/photos/upload'><i className="fas fa-cloud-upload-alt" /></NavLink>
+      <div className={styles.rightNav}>
+        <div className={styles.upload}>
+          <NavLink to='/photos/upload'><i className="fas fa-cloud-upload-alt" /></NavLink>
+        </div>
+        <div className={styles.profile}>
+          <ProfileButton user={sessionUser} />
+        </div>
       </div>
     );
   }else {
     sessionLinks = (
      <div className={styles.rightNav}>
-      <div>
+      <div className={styles.login}>
         <LoginFormModal />
       </div>
-      <div>
+      <div className={styles.signup}>
         <NavLink to="/signup">
           <i className="fas fa-user-astronaut" />
           Sign Up
@@ -30,7 +34,7 @@ const Navigation = ({isLoaded}) => {
   };
   return(
     <div className={styles.navBar}>
-      <div className={styles.lefftBar}>
+      <div className={styles.leftNav}>
         <NavLink exact to="/">
           <i className="fas fa-home"/>
           Home</NavLink>

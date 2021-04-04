@@ -1,12 +1,54 @@
+* {
+  background-color: rgba(250, 229, 191, 0.4);
+}
 .picture {
-  width: 400px;
-  height: 400px;
+  width: 375px;
+  height: 375px;
   object-fit: cover;
+  padding: 10px;
+  border-radius: 10px 100px / 10px;
+  background-color: white;
 }
 
 .container {
+  width: 80%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
+}
+.title {
+  text-transform: capitalize;
+  position: absolute;
+  font-size: 25px;
+  bottom: 20px;
+  right: 300px;
+  color: white;
+  background-color: transparent;
+}
+
+.info {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+.hide {
+  display: none;
+}
+.card {
+  border-style: outset;
+  box-shadow: 2px 1px 1px lightgray;
+  margin-bottom: 15px;
+  border-radius: 10px 100px / 20px;
+  background-color: white;
+}
+.card * {
+  background-color: transparent;
+}
+.favorite {
+  font-size: 25px;
+  color: white;
+  position: absolute;
+  bottom: 35px;
+  right: 30px;
 }

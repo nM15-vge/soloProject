@@ -20,12 +20,15 @@ const StarPhoto = ({photoId, userId}) => {
     dispatch(getStars(photoId))
   };
   return (
-    <>
-      <div className={toggle? `${styles.starOn}`: `${styles.starOff}`} onClick={handleClick}>
+    <div className={styles.starContainer}>
+      {userId && <div className={toggle? `${styles.starOn}`: `${styles.starOff}`} onClick={handleClick}>
         <i className="fas fa-star"></i>
+      </div>}
+      <div>
+        <span className={userId ? `${styles.hide}`: `${styles.starOn}`}><i className="fas fa-star"></i></span>
+        { stars? <span className={styles.starText}>{stars[photoId]}</span>: null}
       </div>
-      { stars? <span>{stars[photoId]}</span>: null}
-    </>
+    </div>
   )
 };
 

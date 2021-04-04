@@ -1,6 +1,6 @@
 
-const secret = process.env.AWS_SECRET;
-const key = process.env.AWS_KEY;
+// const secret = process.env.AWS_SECRET;
+// const key = process.env.AWS_KEY;
 export const fileObj = {
   type: "image/png"
 }

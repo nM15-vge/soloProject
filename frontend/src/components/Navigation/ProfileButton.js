@@ -1,19 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import * as sessionActions from '../../store/session';
+import styles from './NavBar.module.css';
 const ProfileButton = ({ user }) => {
   const dispatch = useDispatch();
   const [showMenu, setShowMe] = useState(false);
 
-  const openMenu = () => {
+  const openMenu = (e) => {
+    e.preventDefault()
     if(showMenu) return;
     setShowMe(true);
   };
 
   useEffect(() => {
     if(!showMenu) return;
-    const closeMenu = () => setShowMe(false);
-
+    const closeMenu = (e) => {
+      e.preventDefault()
+      setShowMe(false)};
     document.addEventListener('click', closeMenu);
     return () => document.removeEventListener('click', closeMenu);
   }, [showMenu])
@@ -23,19 +27,20 @@ const ProfileButton = ({ user }) => {
   };
   return(
     <>
-      <button onClick={openMenu}>
+      <div className={styles.uploadBtn} onClick={openMenu}>
         <i className="fas fa-user-astronaut" />
-      </button>
+        myProfile
+      </div>
       {showMenu && (
-        <ul className="profile-dropdown">
-          <li>{user.username}</li>
-          <li>{user.email}</li>
-          <li>
-            <button onClick={logout}>
+        <div className={styles.profileDropdown}>
+          <div ><Link id={styles.myProfile} to="/myProfile">{user.username}</Link></div>
+          <div id={styles.username}>{user.email}</div>
+          <div id={styles.btn}>
+            <button className={styles.logoutBtn} onClick={logout}>
               <i className="fas fa-sign-out-alt"/>
             </button>
-          </li>
-        </ul>
+          </div>
+        </div>
       )}
     </>
   )
