@@ -13,7 +13,7 @@ const PictureContainerInfo = ({user, id}) => {
       <div
         onMouseEnter={()=> setIsDisplayed(true)}
         onMouseLeave={() => setIsDisplayed(false)}
-        className={styles.pictureContainer} key={id}>
+        className={styles.pictureContainer} key={`${id}sadk;lafds`}>
         <Link to={`/photos/${id}`}>
           <img className={styles.picture} src={photos[id].imageUrl} alt={photos[id].title} />
         </Link>

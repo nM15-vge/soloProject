@@ -1,6 +1,11 @@
 .albumForm {
-  width: 400px;
-  height: 400px;
+  width: 500px;
+  height: 450px;
+  background-color: white;
+  padding: 15px;
+}
+.albumForm * {
+  background-color: white;
 }
 .addAlbum {
   font-size: 100px;
@@ -8,7 +13,7 @@
 
 .container {
   display: flex;
-  width: 400px;
+  width: 100%;
   overflow: scroll;
   overflow-y: hidden;
 }
@@ -30,4 +35,12 @@
   bottom: 50px;
   left: 50px;
 
+}
+.radioBtn {
+  display: inline-block;
+  margin: 0px
+}
+.radioBtn * {
+  margin: 0px;
+  width: 20px;
 }

@@ -15,7 +15,7 @@ const UserPhotos = () => {
   return(
     <div className={styles.container}>
       {photoIds?.map(id => (<div className={styles.pictureContainer} key={id}>
-          <Link to={`/images/${id}`}>
+          <Link to={`/photos/${id}`}>
             <img className={styles.picture} src={photos[id].imageUrl} alt={photos[id].title} />
           </Link>
           </div>))}

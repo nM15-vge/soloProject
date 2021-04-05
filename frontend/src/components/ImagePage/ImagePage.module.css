@@ -11,3 +11,8 @@
   flex: row;
   position: relative;
 }
+.photoFullscreen * {
+  aspect-ratio: 16/9;
+  width: 100%;
+  object-fit: fill;
+}

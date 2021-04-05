@@ -4,6 +4,7 @@ import styles from './ProfilePage.module.css';
 import UserPhotos from './UserPhotos';
 import UserAlbumModal from '../UserAlbumModal';
 import UserAlbums from './UserAlbums';
+import ImagePage from '../ImagePage';
 
 const ProfilePage = ({user}) => {
   return(

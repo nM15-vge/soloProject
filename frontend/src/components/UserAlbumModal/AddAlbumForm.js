@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { userNewAlbum, userPhotos } from '../../store/session';
+import ToggleSelected from './ToggleSelected';
 import styles from './UserAlbumModal.module.css';
 
 const AddAlbumForm = ({setShowModal}) => {
@@ -8,6 +9,7 @@ const AddAlbumForm = ({setShowModal}) => {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [allowViewPublic, setAllowViewPublic] = useState(false)
   const [photos, setPhotos] = useState([]);
   const [errors, setErrors] = useState([]);
 
@@ -27,19 +29,6 @@ const AddAlbumForm = ({setShowModal}) => {
           setErrors(data.errors);
         }
       })
-  };
-
-  const handleClick = e => {
-
-    if(photos.includes(e.target.id)){
-      const id = e.target.id
-      let copyPhotos = [...photos]
-      let newPhotos = copyPhotos.filter(photo => photo !== id)
-      setPhotos([...newPhotos])
-    }else {
-      setPhotos([...photos, e.target.id]);
-    };
-
   };
 
   const pictures = useSelector(state => state.session.userPhotos);
@@ -69,18 +58,40 @@ const AddAlbumForm = ({setShowModal}) => {
           required
         />
       </label>
+      <p>Public Viewing: </p>
+      <div>
+        <label className={styles.radioBtn}>
+          <input
+            id={styles.yes}
+            type="radio"
+            name="public"
+            value='true'
+            onClick={() => setAllowViewPublic(true)}
+            checked={allowViewPublic === true ? true: false}
+            />
+            <span>Yes</span>
+        </label>
+      </div>
+      <div>
+        <label className={styles.radioBtn}>
+          <input
+            id={styles.no}
+            type="radio"
+            name="public"
+            value='false'
+            onClick={() => setAllowViewPublic(false)}
+            checked={allowViewPublic === false ? true: false}
+            />
+            <span>No</span>
+        </label>
+      </div>
       <label>
         Photos:
         <div className={styles.container}>
-          {photoIds?.map(id => (<div className={styles.pictureContainer} key={id}>
-            <img id={id} onClick={handleClick} className={styles.picture} src={pictures[id].imageUrl} alt={pictures[id].title} />
-            <div className={`${styles.selected} ${styles.hidden}`}>
-              <i className="fas fa-check" />
-            </div>
-          </div>))}
+          {photoIds?.map(id => (<ToggleSelected id={id} pictures={pictures} setPhotos={setPhotos}/>))}
         </div>
       </label>
-      <button>Create</button>
+      <button>Create Album</button>
     </form>
   )
 }
