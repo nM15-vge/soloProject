@@ -1,0 +1,15 @@
+.login {
+  background-color: white;
+  width: 200px;
+  height: 225px;
+  padding: 20px;
+}
+.login * {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 5px
+}
+.title {
+  margin: 0px;
+}

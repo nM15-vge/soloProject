@@ -2,6 +2,7 @@ import {useState } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import styles from './LoginForm.module.css';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -22,7 +23,8 @@ const LoginForm = () => {
       })
   }
   return(
-    <form onSubmit={handleSubmit}>
+    <form className={styles.login} onSubmit={handleSubmit}>
+      <h4 className={styles.title} >Log In Form</h4>
       <ul>
         {errors.map((error, idx) => (<li key={idx}>{error}</li>))}
       </ul>
@@ -44,7 +46,7 @@ const LoginForm = () => {
           required
           />
       </label>
-      <button type="submit">Log In</button>
+      <button className={styles.loginBtn} type="submit">Log In</button>
     </form>
   )
 }

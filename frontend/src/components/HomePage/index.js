@@ -17,7 +17,9 @@ const HomePageContent = () => {
       <h3>Popular Photos</h3>
       <div className={styles.container}>
           {photos && Object.keys(photos).map(id => (
-            <PictureContainerInfo id={id} photos={id} user={user} />
+            <div key={`${id}lkalf`}>
+              <PictureContainerInfo id={id} photos={id} user={user} />
+            </div>
           ))}
         </div>
     </>

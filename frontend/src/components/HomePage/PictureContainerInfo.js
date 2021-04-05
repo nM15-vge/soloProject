@@ -19,7 +19,7 @@ const PictureContainerInfo = ({user, id}) => {
         </Link>
       </div>
       <div
-        class={isDisplayed? `${styles.info}`: `${styles.hide}`}>
+        className={isDisplayed? `${styles.info}`: `${styles.hide}`}>
         <Link to={`/photos/${id}`}><p className={styles.title}>{photos[id].title}</p></Link>
         <CommentModal className={styles.comment} photoId={id} userId ={user ? user.id: null}/>
         <StarPhoto className={styles.stars} photoId={id} userId={user ? user.id: null}/>
