@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { userAlbums } from '../../store/session';
+import AlbumContents from './AlbumContents';
 import styles from './ProfilePage.module.css';
 const UserAlbums = () => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const UserAlbums = () => {
   return(
     <div className={styles.container}>
       {albumIds?.map(id => (<div className={styles.pictureContainer} key={id}>
-          {albums[id].title}
+          <AlbumContents albums={albums} id={id} />
         </div>))}
     </div>
   )

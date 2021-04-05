@@ -46,4 +46,24 @@
   height: 400px;
   object-fit: cover;
 }
+.album {
+  position: relative;
+}
+.edit {
+  position: absolute;
+  top: 20px;
+  color: white;
+  font-size: 25px;
+  right: 40px;
 
+}
+.text {
+  position: absolute;
+  bottom: 50px;
+  color: white;
+  font-size: 20px;
+  right: 40px;
+}
+.hide {
+  display: none;
+}

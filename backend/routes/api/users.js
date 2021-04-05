@@ -14,7 +14,7 @@ router.post('', validateSignup, asyncHandler(async(req, res) => {
 }));
 
 router.get('/:id/albums', requireAuth, asyncHandler(async(req, res) => {
-  const albums = await Album.findAll({where: {userId: req.user.id}});
+  const albums = await Album.findAll({where: {userId: req.user.id}, include: {model: Photo}});
   res.json(albums)
 }));
 

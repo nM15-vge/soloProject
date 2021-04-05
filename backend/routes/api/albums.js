@@ -16,6 +16,11 @@ router.post('/', requireAuth, asyncHandler(async(req, res) => {
   // res.redirect(`/api/users/${req.users.id}/albums`);
 }));
 
+router.put('/:id', requireAuth, asyncHandler(async(req, res) => {
+  const {albumId, title, description, photos } = req.body;
+  const album = await Album.update({title, description, photos}, {where: {id: albumId}})
+}))
+
 router.get('/:id/comments', asyncHandler(async(req, res) => {
   const { albumId } = req.params;
   const comments = await CommentAlbum.findAll({where: {albumId}});

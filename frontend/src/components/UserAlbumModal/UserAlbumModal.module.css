@@ -25,6 +25,9 @@
 .pictureContainer {
   position: relative;
 }
+.pictureContainer * {
+  background-color: transparent;
+}
 .hidden {
   display: none;
 }

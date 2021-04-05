@@ -1,18 +1,26 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { userNewAlbum, userPhotos } from '../../store/session';
+import { updateAlbum } from '../../store/album';
 import ToggleSelected from './ToggleSelected';
 import styles from './UserAlbumModal.module.css';
 
-const AddAlbumForm = ({setShowModal}) => {
+const AddAlbumForm = ({setShowModal, album}) => {
   const dispatch = useDispatch();
-
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [allowViewPublic, setAllowViewPublic] = useState(false)
-  const [photos, setPhotos] = useState([]);
+  const arrayPhotos = () => {
+    if(album){
+      let idArr = album.Photos.map(photo => photo.id)
+      return idArr
+    }else {
+      return []
+    }
+  }
+  const [title, setTitle] = useState(album ? album.title: '');
+  const [description, setDescription] = useState(album? album.description: '');
+  const [allowViewPublic, setAllowViewPublic] = useState(album? album.public: false)
+  const [photos, setPhotos] = useState(arrayPhotos);
   const [errors, setErrors] = useState([]);
-
+  console.log(photos)
   useEffect(() => {
     dispatch(userPhotos())
   }, [dispatch]);
@@ -20,15 +28,27 @@ const AddAlbumForm = ({setShowModal}) => {
   const handleSubmit = e => {
     e.preventDefault();
     setErrors([]);
-    return dispatch(userNewAlbum({title, description, photos}))
-      .then(() => setShowModal(false))
-      .catch(async (res) => {
-        const data = await res.json();
-        if(data && data.errors){
-          setShowModal(true)
-          setErrors(data.errors);
-        }
-      })
+    if(album) {
+      return dispatch(updateAlbum({albumId: album.id, title, description, photos}))
+        .then(() => setShowModal(false))
+        .catch(async(res) => {
+          const data = await res.json();
+          if(data && data.errors){
+            setShowModal(true);
+            setErrors(data.errors);
+          }
+        })
+    }else {
+      return dispatch(userNewAlbum({title, description, photos}))
+        .then(() => setShowModal(false))
+        .catch(async (res) => {
+          const data = await res.json();
+          if(data && data.errors){
+            setShowModal(true)
+            setErrors(data.errors);
+          }
+        })
+    }
   };
 
   const pictures = useSelector(state => state.session.userPhotos);
@@ -66,7 +86,7 @@ const AddAlbumForm = ({setShowModal}) => {
             type="radio"
             name="public"
             value='true'
-            onClick={() => setAllowViewPublic(true)}
+            onChange={() => setAllowViewPublic(true)}
             checked={allowViewPublic === true ? true: false}
             />
             <span>Yes</span>
@@ -79,7 +99,7 @@ const AddAlbumForm = ({setShowModal}) => {
             type="radio"
             name="public"
             value='false'
-            onClick={() => setAllowViewPublic(false)}
+            onChange={() => setAllowViewPublic(false)}
             checked={allowViewPublic === false ? true: false}
             />
             <span>No</span>
@@ -88,10 +108,11 @@ const AddAlbumForm = ({setShowModal}) => {
       <label>
         Photos:
         <div className={styles.container}>
-          {photoIds?.map(id => (<ToggleSelected id={id} pictures={pictures} setPhotos={setPhotos}/>))}
+          {photoIds?.map(id => (<div key={`${id} kjlj;lkj;`}><ToggleSelected id={id} pictures={pictures} setPhotos={setPhotos} photos={photos}/></div>))}
         </div>
       </label>
-      <button>Create Album</button>
+      <button>{album? `Update Album`:`Create Album`}</button>
+      {album && <button onClick={() => setShowModal(false)}>Cancel</button>}
     </form>
   )
 }
