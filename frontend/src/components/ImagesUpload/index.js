@@ -1,42 +1,42 @@
-import { useCallback } from 'react';
-import { RNS3 } from 'react-native-aws3';
+import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { options, fileObj} from '../Uploads';
 import styles from './ImageUpload.module.css';
 
 const ImagesUpload = () => {
+  const [images, setImages] = useState([]);
+  const [imageUrls, setImageUrls] = useState([])
   const onDrop = useCallback(acceptedFiles => {
-    acceptedFiles.map(file => {
+    acceptedFiles.forEach(file => {
       const reader = new FileReader();
-      // reader.onabort = (e) => console.log('file reading was aborted')
-      // reader.onerror = (e) => console.log('file reading has failed')
-      console.log(file)
-      reader.onload = (e) => {
-        const binaryStr = e.target.result
-        file.uri = binaryStr;
-        fileObj.name = file.name;
-        RNS3.put(file, options).then(response => {
-          if (response.status !== 201)
-            throw new Error("Failed to upload image to S3");
-          console.log(response.body);
-        });
-
+      reader.onload = () => {
+        let buffer = reader.result;
+        setImages([...images, { originalname: file.name, mimetype: file.type, buffer}]);
       }
-     reader.readAsDataURL(file)
-     console.log(file);
-     return file;
+      reader.readAsArrayBuffer(file);
+      const readerUrl = new FileReader();
+      readerUrl.onload = () => {
+        let dataUrl = readerUrl.result;
+        setImageUrls([...imageUrls, {name: file.name, dataUrl}])
+      };
+      readerUrl.readAsDataURL(file);
     })
-  }, []);
+  }, [images, imageUrls]);
+  if(images){
+    console.log(images);
+  };
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
   return (
-    <div className={styles.dropzone} {...getRootProps()}>
-      <input {...getInputProps()} />
-      {
-        isDragActive ?
-        <p>Drop the files here...</p> :
-        <p>Drag 'n' drop some files here, or click to select files.</p>
-      }
-    </div>
+    <>
+      <div>{imageUrls && imageUrls.map(image => <img key={image.dataUrl} src={image.dataUrl} alt={image.name} style={{"width": "150px", "height": "150px"}}></img>)}</div>
+      <div className={styles.dropzone} {...getRootProps()}>
+        <input {...getInputProps()} />
+        {
+          isDragActive ?
+          <p>Drop the files here...</p> :
+          <p>Drag 'n' drop some files here, or click to select files.</p>
+        }
+      </div>
+    </>
   )
 }
 
