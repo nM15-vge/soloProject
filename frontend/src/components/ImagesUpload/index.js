@@ -3,31 +3,31 @@ import { useDropzone } from 'react-dropzone';
 import styles from './ImageUpload.module.css';
 
 const ImagesUpload = () => {
-  const [images, setImages] = useState([]);
-  const [imageUrls, setImageUrls] = useState([])
+  const [image, setImage] = useState({});
+  const [imageUrl, setImageUrl] = useState({})
   const onDrop = useCallback(acceptedFiles => {
     acceptedFiles.forEach(file => {
       const reader = new FileReader();
       reader.onload = () => {
         let buffer = reader.result;
-        setImages([...images, { originalname: file.name, mimetype: file.type, buffer}]);
+        setImage({ originalname: file.name, mimetype: file.type, buffer});
       }
       reader.readAsArrayBuffer(file);
       const readerUrl = new FileReader();
       readerUrl.onload = () => {
         let dataUrl = readerUrl.result;
-        setImageUrls([...imageUrls, {name: file.name, dataUrl}])
+        setImageUrl({name: file.name, dataUrl})
       };
       readerUrl.readAsDataURL(file);
     })
-  }, [images, imageUrls]);
-  if(images){
-    console.log(images);
+  }, []);
+  if(image){
+    console.log(image);
   };
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
   return (
     <>
-      <div>{imageUrls && imageUrls.map(image => <img key={image.dataUrl} src={image.dataUrl} alt={image.name} style={{"width": "150px", "height": "150px"}}></img>)}</div>
+      <div>{imageUrl &&  <img key={imageUrl.dataUrl} src={imageUrl.dataUrl} alt={imageUrl.name} style={{"width": "150px", "height": "150px"}}></img>}</div>
       <div className={styles.dropzone} {...getRootProps()}>
         <input {...getInputProps()} />
         {
