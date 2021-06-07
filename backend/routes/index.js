@@ -28,10 +28,4 @@ if(process.env.NODE_ENV !== 'production') {
   })
 }
 
-// Testing purpose only:
-// router.get('/hello/world', (req, res) => {
-//   res.cookie('XSRF-TOKEN', req.csrfToken());
-//   res.send('Hello World');
-// })
-
 module.exports = router;
