@@ -22,16 +22,22 @@ const stars = (stars) => ({
 const photo = (photo) => ({
   type: PHOTO,
   photo
-})
+});
+
 export const getPhoto = (photoId) => async dispatch => {
   const res = await csrfFetch(`/api/photos/${photoId}`);
   const data = await res.json();
   dispatch(photo(data));
-}
+};
+
 export const populatePhotos = () => async dispatch => {
   const res = await csrfFetch(`/api/photos/public`)
   const data = await res.json();
   dispatch(populate(data))
+};
+
+export const uploadPhoto = (file) => async dispatch => {
+  const res = await csrfFetch(`/api/photos/`)
 };
 
 export const commentPhotos = (commentObj) => async dispatch => {

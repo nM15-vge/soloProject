@@ -1,15 +1,27 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { useDispatch, useSelector } from 'react-redux';
 import { Modal } from '../../context/Modal';
+import { userAlbums } from '../../store/session';
 import styles from './ImageUpload.module.css';
 
 const ImagesUpload = () => {
+  const dispatch = useDispatch();
+
   const [image, setImage] = useState({});
   const [imageUrl, setImageUrl] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [publicPrivate, setPublicPrivate] = useState(false);
   const [albumId, setAlbumId] = useState(0);
+
+  const userId = useSelector(state => state.session.user.id);
+
+  useEffect(() => {
+    dispatch(userAlbums(userId));
+  }, [dispatch])
+
+  const albums = useSelector(state => state.session.userAlbums);
 
   const onDrop = useCallback(acceptedFiles => {
     acceptedFiles.forEach(file => {
@@ -67,6 +79,13 @@ const ImagesUpload = () => {
               />
               Private
             </label>
+            <select value={albumId} onChange={e => setAlbumId(e.target.value)}>
+              <option value={0}>--Please select an option-- </option>
+              {albums && Object.keys(albums).map(id => (
+                <option key={id} value={id}>{albums[id].title}</option>
+              ))}
+            </select>
+            <button type="submit">Upload Picture</button>
           </form>
         </Modal>
       )}</div>
