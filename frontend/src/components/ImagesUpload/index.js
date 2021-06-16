@@ -1,19 +1,23 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useHistory } from "react-router-dom";
 import { useDropzone } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal } from '../../context/Modal';
+import { uploadPhoto } from '../../store/photo';
 import { userAlbums } from '../../store/session';
 import styles from './ImageUpload.module.css';
 
 const ImagesUpload = () => {
   const dispatch = useDispatch();
+  const history = useHistory()
 
-  const [image, setImage] = useState({});
+  const [image, setImage] = useState();
   const [imageUrl, setImageUrl] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [publicPrivate, setPublicPrivate] = useState(false);
   const [albumId, setAlbumId] = useState(0);
+  const [errors, setErrors] = useState([])
 
   const userId = useSelector(state => state.session.user.id);
 
@@ -25,32 +29,34 @@ const ImagesUpload = () => {
 
   const onDrop = useCallback(acceptedFiles => {
     acceptedFiles.forEach(file => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        let buffer = reader.result;
-        setImage({ originalname: file.name, mimetype: file.type, buffer});
-      }
-      reader.readAsArrayBuffer(file);
+      setImage(file);
       const readerUrl = new FileReader();
       readerUrl.onload = () => {
         let dataUrl = readerUrl.result;
         setImageUrl({name: file.name, dataUrl})
+        setTitle(file.name)
       };
       readerUrl.readAsDataURL(file);
     })
   }, []);
-  if(image){
-    console.log(image);
-  };
 
   const onSubmit = () => {
+    if(!title.length){
+      setErrors([...errors, "Their should be a title for the picture."])
+    }else if(!description.length){
+      setErrors([...errors, "A picture needs a simple description."])
+    }else {
+      dispatch(uploadPhoto({image, title, description, userId, publicPrivate}));
+      // setImageUrl(null)
+      // history.push("/myProfile/photos")
+    }
+  };
 
-  }
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
   return (
     <>
       <div>{imageUrl && (
-        <Modal onClose={() => setImageUrl(null)}>
+        <Modal>
           <img key={imageUrl.dataUrl} src={imageUrl.dataUrl} alt={imageUrl.name} style={{"width": "150px", "height": "150px"}} />
           <form onSubmit={onSubmit}>
             <label>
@@ -79,6 +85,7 @@ const ImagesUpload = () => {
               />
               Private
             </label>
+            <p>Album:</p>
             <select value={albumId} onChange={e => setAlbumId(e.target.value)}>
               <option value={0}>--Please select an option-- </option>
               {albums && Object.keys(albums).map(id => (

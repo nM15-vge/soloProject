@@ -36,8 +36,24 @@ export const populatePhotos = () => async dispatch => {
   dispatch(populate(data))
 };
 
-export const uploadPhoto = (file) => async dispatch => {
-  const res = await csrfFetch(`/api/photos/`)
+export const uploadPhoto = (info) => async dispatch => {
+  const {image, title, description, userId, publicPrivate} = info;
+  const formData = new FormData();
+  formData.append("image", image);
+  formData.append("title", title);
+  formData.append("description", description);
+  formData.append("userId", userId);
+  formData.append("publicPrivate", publicPrivate);
+  console.log(formData)
+  const res = await csrfFetch(`/api/photos/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    body: formData
+  });
+  const data = await res.json();
+  // dispatch(populate(data))
 };
 
 export const commentPhotos = (commentObj) => async dispatch => {

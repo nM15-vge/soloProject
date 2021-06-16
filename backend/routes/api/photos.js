@@ -2,7 +2,7 @@ const router = require('express').Router();
 const asyncHandler = require('express-async-handler');
 const { requireAuth } = require('../../utils/auth');
 const { Photo, CommentPhoto, StarPhoto, User } = require('../../db/models/index');
-
+const { singlePublicImageUpload, singleMulterUpload } = require("../../awsS3")
 
 router.get('/public', asyncHandler(async( req, res) => {
   const photos = await Photo.findAll({where: {public: true}, limit: 12, order:[['createdAt', 'ASC']]});
@@ -14,8 +14,13 @@ router.get('/:id', asyncHandler(async(req, res) => {
   res.json(photo);
 }))
 router.post('/', requireAuth, asyncHandler(async(req, res) => {
-  const { imageUrl, title, description, userId, public } = req.body;
-  const photo = await Photo.create({imageUrl, title, description, userId, public});
+  // const { title, description, userId, publicPrivate } = req.body;
+  // const imageUrl = await singlePublicImageUpload(req.file);
+  // console.log(imageUrl);
+  console.log("adlfadhf;ja;lkfkdjkl;afjdl;",req.body);
+  // if(imageUrl){
+  //   const photo = await Photo.create({imageUrl, title, description, userId, public: publicPrivate});
+  // };
   res.json({'succes': 'hello'});
 }))
 router.delete('/:id', requireAuth, asyncHandler(async(req, res) => {
