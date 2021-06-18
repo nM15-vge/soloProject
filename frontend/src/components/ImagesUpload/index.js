@@ -43,8 +43,10 @@ const ImagesUpload = () => {
   const onSubmit = () => {
     if(!title.length){
       setErrors([...errors, "Their should be a title for the picture."])
+      return
     }else if(!description.length){
       setErrors([...errors, "A picture needs a simple description."])
+      return
     }else {
       dispatch(uploadPhoto({image, title, description, userId, publicPrivate}));
       // setImageUrl(null)
