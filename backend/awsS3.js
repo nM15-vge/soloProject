@@ -4,7 +4,6 @@ const throughLensBucket = "throughlensbucket";
 const multer = require("multer");
 
 const s3 = new AWS.S3({ apiVersion: "2006-03-01" });
-
 const singlePublicImageUpload = async file => {
     const { originalname, mimetype, buffer } = await file;
     const path = require("path");

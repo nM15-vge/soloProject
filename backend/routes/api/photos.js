@@ -13,14 +13,13 @@ router.get('/:id', asyncHandler(async(req, res) => {
   const photo = await Photo.findByPk(id, {include: {model: CommentPhoto}});
   res.json(photo);
 }))
-router.post('/', requireAuth, asyncHandler(async(req, res) => {
-  // const { title, description, userId, publicPrivate } = req.body;
-  // const imageUrl = await singlePublicImageUpload(req.file);
-  // console.log(imageUrl);
-  console.log("adlfadhf;ja;lkfkdjkl;afjdl;",req.body);
-  // if(imageUrl){
-  //   const photo = await Photo.create({imageUrl, title, description, userId, public: publicPrivate});
-  // };
+router.post('/', singleMulterUpload("image"), requireAuth, asyncHandler(async(req, res) => {
+  const { title, description, userId, publicPrivate } = req.body;
+  const imageUrl = await singlePublicImageUpload(req.file);
+  console.log(imageUrl);
+  if(imageUrl){
+    const photo = await Photo.create({imageUrl, title, description, userId, public: publicPrivate});
+  };
   res.json({'succes': 'hello'});
 }))
 router.delete('/:id', requireAuth, asyncHandler(async(req, res) => {

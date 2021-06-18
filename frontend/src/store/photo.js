@@ -44,7 +44,6 @@ export const uploadPhoto = (info) => async dispatch => {
   formData.append("description", description);
   formData.append("userId", userId);
   formData.append("publicPrivate", publicPrivate);
-  console.log("I was here..........", formData)
   const res = await csrfFetch(`/api/photos/`, {
     method: "POST",
     headers: {

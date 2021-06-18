@@ -23,7 +23,7 @@ const ImagesUpload = () => {
 
   useEffect(() => {
     dispatch(userAlbums(userId));
-  }, [dispatch])
+  }, [dispatch, userId]);
 
   const albums = useSelector(state => state.session.userAlbums);
 
@@ -49,8 +49,8 @@ const ImagesUpload = () => {
       return
     }else {
       dispatch(uploadPhoto({image, title, description, userId, publicPrivate}));
-      // setImageUrl(null)
-      // history.push("/myProfile/photos")
+      setImageUrl(null)
+      history.push("/myProfile/photos")
     }
   };
 
