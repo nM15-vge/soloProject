@@ -1,4 +1,5 @@
 import { csrfFetch }  from './csrf';
+import { photos2, userPhotos } from './session';
 
 const POPULATE = 'photos/POPULATE';
 const COMMENTS = 'photos/COMMENTS';
@@ -52,7 +53,7 @@ export const uploadPhoto = (info) => async dispatch => {
     body: formData
   });
   const data = await res.json();
-  // dispatch(populate(data))
+  dispatch(photos2(data))
 };
 
 export const commentPhotos = (commentObj) => async dispatch => {

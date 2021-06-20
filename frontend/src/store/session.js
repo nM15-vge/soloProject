@@ -12,7 +12,8 @@ const login = (user) => ({
 const logout = () => ({
   type: LOGOUT,
 });
-const photos = (photos) => ({
+
+export const photos2 = (photos) => ({
   type: PHOTOS,
   photos
 });
@@ -54,7 +55,7 @@ export const signupUser = (user) => async dispatch => {
 export const userPhotos = (userId) => async dispatch => {
   const res = await csrfFetch(`/api/users/${userId}/photos`)
   const data = await res.json();
-  dispatch(photos(data))
+  dispatch(photos2(data))
 };
 export const userAlbums = (userId) => async dispatch => {
   const res = await csrfFetch(`/api/users/${userId}/albums`);

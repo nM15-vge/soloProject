@@ -16,11 +16,14 @@ router.get('/:id', asyncHandler(async(req, res) => {
 router.post('/', singleMulterUpload("image"), requireAuth, asyncHandler(async(req, res) => {
   const { title, description, userId, publicPrivate } = req.body;
   const imageUrl = await singlePublicImageUpload(req.file);
-  console.log(imageUrl);
   if(imageUrl){
-    const photo = await Photo.create({imageUrl, title, description, userId, public: publicPrivate});
+    await Photo.create({imageUrl, title, description, userId, public: publicPrivate});
+    const photos = await Photo.findAll({where: {userId}})
+    res.json(photos)
+    return
   };
-  res.json({'succes': 'hello'});
+  res.status(400);
+  res.send({"errorMessage": "Failed to upload image."})
 }))
 router.delete('/:id', requireAuth, asyncHandler(async(req, res) => {
   const { id } = req.params;
