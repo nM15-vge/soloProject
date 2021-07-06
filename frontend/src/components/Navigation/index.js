@@ -10,7 +10,7 @@ const Navigation = ({isLoaded}) => {
     sessionLinks = (
       <div className={styles.rightNav}>
         <div className={styles.upload}>
-          <NavLink to='/photos/upload'><i className="fas fa-cloud-upload-alt" /></NavLink>
+          <NavLink to='/photos/upload'><i className={`fas fa-cloud-upload-alt ${styles.spacing}`} /></NavLink>
         </div>
         <div className={styles.profile}>
           <ProfileButton user={sessionUser} />
@@ -25,8 +25,8 @@ const Navigation = ({isLoaded}) => {
       </div>
       <div className={styles.signup}>
         <NavLink to="/signup">
-          <i className="fas fa-user-astronaut" />
-          Sign Up
+          <i className={`fas fa-user-astronaut ${styles.spacing}`} />
+          <span className={styles.spacing}>Sign Up</span>
         </NavLink>
       </div>
      </div>
@@ -35,9 +35,10 @@ const Navigation = ({isLoaded}) => {
   return(
     <div className={styles.navBar}>
       <div className={styles.leftNav}>
-        <NavLink exact to="/">
-          <i className="fas fa-home"/>
-          Home</NavLink>
+        <NavLink  exact to="/">
+          <i className={`fas fa-home ${styles.spacing}`}/>
+          <span className={styles.spacing}>Home</span>
+        </NavLink>
       </div>
       {isLoaded && sessionLinks}
     </div>

@@ -13,6 +13,15 @@ const LoginForm = () => {
 
   if(sessionUser) return (<Redirect to="/" />);
 
+  const login = e => {
+    e.preventDefault();
+    return dispatch(sessionActions.loginUser({credential: "Demo1", password: "password"}))
+      .catch(async res => {
+        const data = await res.json();
+        if( data && data.errors ) setErrors(data.errors);
+      });
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
     setErrors([]);
@@ -47,6 +56,7 @@ const LoginForm = () => {
           />
       </label>
       <button className={styles.loginBtn} type="submit">Log In</button>
+      <button className={styles.loginBtn} onClick={login}>Demo User</button>
     </form>
   )
 }

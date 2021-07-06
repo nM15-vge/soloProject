@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import * as sessionActions from '../../store/session';
 import styles from './NavBar.module.css';
 const ProfileButton = ({ user }) => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [showMenu, setShowMe] = useState(false);
 
@@ -24,12 +25,13 @@ const ProfileButton = ({ user }) => {
   const logout = e => {
     e.preventDefault();
     dispatch(sessionActions.logoutUser());
+    history.push("/")
   };
   return(
     <>
       <div className={styles.uploadBtn} onClick={openMenu}>
-        <i className="fas fa-user-astronaut" />
-        myProfile
+        <i className={`fas fa-user-astronaut ${styles.spacing}`} />
+        <span className={styles.spacing}>myProfile</span>
       </div>
       {showMenu && (
         <div className={styles.profileDropdown}>
@@ -37,7 +39,9 @@ const ProfileButton = ({ user }) => {
           <div id={styles.username}>{user.email}</div>
           <div id={styles.btn}>
             <button className={styles.logoutBtn} onClick={logout}>
-              <i className="fas fa-sign-out-alt"/>
+              <a>
+                <i className="fas fa-sign-out-alt"/>
+              </a>
             </button>
           </div>
         </div>
